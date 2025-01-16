@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# Random wallpaper script for i3wm
+# Images should be jpg, jpeg or png
+# Requires Feh
+# Made by Elizabeth Swann
+
+WALLPAPER_DIR=$1
+WALLPAPERS=("$WALLPAPER_DIR"/*.{jpg,jpeg,png})
+
+if [ "$EUID" -eq 0 ]; then # Root Check
+    echo "Do not run as root."
+    exit 1
+fi
+
+if [ $# -eq 0 ]; then # Args Check
+    echo "Usage: $0 <directory>"
+    exit 1
+fi
+
+if ! command -v feh &> /dev/null; then
+    echo "Missing Feh"
+    exit 1
+fi
+
+if [ ! -d "$WALLPAPER_DIR" ] || [ -z "$(ls -A "$WALLPAPER_DIR")" ]; then
+    echo "$WALLPAPER_DIR does not exist or is empty."
+    exit 1
+fi
+
+if [ ${#WALLPAPERS[@]} -eq 0 ]; then
+    echo "No image files found in $WALLPAPER_DIR."
+    exit 1
+fi
+
+random_index=$((RANDOM % ${#WALLPAPERS[@]}))
+feh --bg-fill "${WALLPAPERS[$random_index]}"
+exit 0
