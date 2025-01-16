@@ -5,6 +5,9 @@
 # Requires Feh
 # Made by Elizabeth Swann
 
+# Usage in i3 Config
+# exec --no-startup-id sleep 1 && /directory/to/RandomWallpaper /directory/to/wallpapers
+
 WALLPAPER_DIR=$1
 WALLPAPERS=("$WALLPAPER_DIR"/*.{jpg,jpeg,png})
 
