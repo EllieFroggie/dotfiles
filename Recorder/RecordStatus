@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# For use with Recorder and i3blocks
+# [recordstatus]
+# full_text=
+# command=~/.config/i3/scripts/recordstatus ~/Recordings rec.pid
+# interval=2
+# color=#ff79c6
+
+
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <directory> <filename>"
+    exit 1
+fi
+
+dir="$1"
+filename="$2"
+filepath="$dir/$filename"
+
+[ -e "$filepath" ] && echo " " || echo ""

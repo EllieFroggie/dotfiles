@@ -1,0 +1,49 @@
+#!/usr/bin/env perl
+
+# Utility to start a quick recording using SoX rec
+# Made by Elizabeth Swann
+
+use strict;
+use warnings;
+use autodie;
+use File::Basename;
+use File::Path qw(make_path);
+use POSIX qw(strftime);
+use File::Spec;
+
+my $dir = $ENV{RECORDING_DIR} || "/home/swann/Recordings";
+my $base_filename = strftime("%Y%m%d-%H%M", localtime);
+
+unless (-d $dir) {
+    die "Error: Directory $dir does not exist.\n";
+}
+
+my $pid_file = File::Spec->catfile($dir, 'rec.pid');
+
+if (-f $pid_file) {
+    open(my $fh, '<', $pid_file);
+    my $pid = <$fh>;
+    chomp $pid;
+    close($fh);
+
+    kill 'INT', $pid or die "Failed to terminate process $pid: $!";
+    sleep(4);
+    unlink $pid_file;
+    print "Recording stopped.\n";
+} else {
+    my $filename = File::Spec->catfile($dir, "$base_filename.mp3");
+    my $pid = fork();
+    die "Failed to fork: $!" unless defined $pid;
+
+    if ($pid == 0) {
+        open STDOUT, '>', '/dev/null';
+        open STDERR, '>', '/dev/null';
+        exec("rec -c 1 -r 44100 -b 16 -e signed-integer -t mp3 $filename")
+            or die "Failed to execute SoX command: $!";
+    } else {
+        open(my $fh, '>', $pid_file);
+        print $fh $pid;
+        close($fh);
+        print "Recording started.\n";
+    }
+}
