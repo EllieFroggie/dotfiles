@@ -1,16 +1,39 @@
 #!/bin/bash
 
-# Requires bc
+# Requires bc echo $c | bc -l | xargs printf "%.2f\n"
 
 # Made by Elizabeth Swann
 # Tool to display crypto prices in i3bar
 # Usage: ./krakenprice <PAIR> <PAIRKEY>
 # You'll need to get the pair key from Kraken's website
 
+while getopts ":m" opt; do
+  case $opt in
+    m)
+      m=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND - 1))
+
 if [ -z "$2" ] || [ "${#1}" -ne 6 ]; then
-  echo "Usage: $0 <pair> <result>"
+  echo "Usage: $0 [-m] <pair> <result>"
   echo "The pair should be a six-letter string."
   exit 1
+fi
+
+
+if [ "$m" = true ]; then
+  display=$(xset q | grep -E 'Monitor is' | awk '{print $3}')
+  if [ $display = "Off" ]; then
+    echo "OFF"
+    exit 1
+  fi
 fi
 
 pair="$1"
@@ -22,6 +45,19 @@ response=$(curl -sL "https://api.kraken.com/0/public/Ticker?pair=$pair" -H 'Acce
 
 if [ $? -ne 0 ]; then
   echo "Failed to retrieve data from the Kraken API."
+  exit 1
+fi
+
+error=$(echo "$response" | jq --arg k "$k" '.error[]')
+rate_limit_error='EAPI:Rate limit exceeded'
+throttled_error='EService: Throttled'
+
+if [ "$error" == "$rate_limit_error" ]; then
+  echo "Rate limit exceeded. Please try again later."
+  exit 1
+elif [ "$error" == "${throttled_error}:"* ]; then
+  timestamp=$(echo "$error" | cut -d: -f3)
+  echo "Too many concurrent requests. Try again after $timestamp."
   exit 1
 fi
 

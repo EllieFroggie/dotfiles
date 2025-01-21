@@ -1,18 +1,36 @@
 #!/bin/bash
 
-# Requires bc
+while getopts ":m" opt; do
+  case $opt in
+    m)
+      m=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
 
-# Made by Elizabeth Swann
-# Tool to display crypto prices in i3bar
-# Usage: ./krakenprice <PAIR> <PAIRKEY>
-# You'll need to get the pair key from Kraken's website
+# Shift the parsed options to handle positional parameters correctly
+shift $((OPTIND - 1))
 
 if [ -z "$2" ] || [ "${#1}" -ne 6 ]; then
-  echo "Usage: $0 <pair> <result>"
+  echo "Usage: $0 [-m] <pair> <result>"
   echo "The pair should be a six-letter string."
   exit 1
 fi
 
+
+if [ "$m" = true ]; then
+  display=$(xset q | grep -E 'Monitor is' | awk '{print $3}')
+  echo "OFF"
+  if [ $display = "On" ]; then
+    exit 1
+  fi
+fi
+
+m=false
 pair="$1"
 k="$2"
 x="${pair:0:3}"
@@ -25,14 +43,26 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-c=$(echo "$response" | jq --arg k "$k" '.result[$k]')
+error=$(echo "$response" | jq --arg k "$k" '.error[]')
+rate_limit_error='EAPI:Rate limit exceeded'
+throttled_error='EService: Throttled'
 
+if [ "$error" == "$rate_limit_error" ]; then
+  echo "Rate limit exceeded. Please try again later."
+  exit 1
+elif [ "$error" == "${throttled_error}:"* ]; then
+  timestamp=$(echo "$error" | cut -d: -f3)
+  echo "Too many concurrent requests. Try again after $timestamp."
+  exit 1
+fi
+
+c=$(echo "$response" | jq --arg k "$k" '.result[$k]')
 
 if [ $? -ne 0 ]; then
   echo "Failed to extract the required value from the JSON response."
   exit 1
 fi
 
-#echo $c | bc -l | xargs printf "%.2f\n"
-printf "%.2f\n" $c
+echo $c > ./assets/$pair
+echo $c
 exit 0
