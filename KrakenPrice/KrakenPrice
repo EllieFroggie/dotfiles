@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Requires bc echo $c | bc -l | xargs printf "%.2f\n"
+# Requires bc
 
 # Made by Elizabeth Swann
 # Tool to display crypto prices in i3bar
-# Usage: ./krakenprice <PAIR> <PAIRKEY>
+# Usage: ./krakenprice -m <PAIR> <PAIRKEY>
 # You'll need to get the pair key from Kraken's website
 
 while getopts ":m" opt; do
