@@ -22,7 +22,7 @@ done
 shift $((OPTIND - 1))
 
 if [ -z "$2" ] || [ "${#1}" -ne 6 ]; then
-  echo "Usage: $0 [-m] <pair> <result>"
+  echo "Usage: $0 [-m] <pair> <PAIRKEY>"
   echo "The pair should be a six-letter string."
   exit 1
 fi
