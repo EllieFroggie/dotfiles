@@ -29,7 +29,7 @@ fi
 
 
 if [ "$m" = true ]; then
-  display=$(xset q | grep -E 'Monitor is' | awk '{print $3}')
+  display=$(xset -display :0 q | grep -E 'Monitor is' | awk '{print $3}')
   if [ $display = "Off" ]; then
     echo "OFF"
     exit 1
