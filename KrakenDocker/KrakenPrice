@@ -12,7 +12,6 @@ while getopts ":m" opt; do
   esac
 done
 
-# Shift the parsed options to handle positional parameters correctly
 shift $((OPTIND - 1))
 
 if [ -z "$2" ] || [ "${#1}" -ne 6 ]; then

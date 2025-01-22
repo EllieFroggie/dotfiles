@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Requires bc
+# Requires jq
 
 # Made by Elizabeth Swann
 # Tool to display crypto prices in i3bar
@@ -62,7 +63,6 @@ elif [ "$error" == "${throttled_error}:"* ]; then
 fi
 
 c=$(echo "$response" | jq --arg k "$k" '.result[$k].b[0]')
-
 
 if [ $? -ne 0 ]; then
   echo "Failed to extract the required value from the JSON response."
