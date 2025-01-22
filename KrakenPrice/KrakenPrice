@@ -6,7 +6,10 @@
 # Made by Elizabeth Swann
 # Tool to display crypto prices in i3bar
 # Usage: ./krakenprice -m <PAIR> <PAIRKEY>
+# -m,  stop requests when the monitor turns off
+
 # You'll need to get the pair key from Kraken's website
+# https://docs.kraken.com/api/docs/rest-api/get-ticker-information/
 
 while getopts ":m" opt; do
   case $opt in
