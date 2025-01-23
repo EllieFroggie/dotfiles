@@ -35,7 +35,7 @@ if [ "$m" = true ]; then
   if [ "$(xset q | grep -E "DPMS is" | awk '{print  $3}')" = "Disabled" ]; then
     echo "DPMSerr"
     exit 1
-  elif [ "$(xset q | grep -E "DPMS is" | awk '{print  $3}')" = "Enabled" ]; then
+  else
     if [ "$(xset -display :0 q | grep -E 'Monitor is' | awk '{print $3}')" = "Off" ]; then
     echo "OFF"
     exit 1
