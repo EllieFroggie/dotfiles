@@ -45,15 +45,14 @@ fi
 
 p="$1"
 k="$2"
-
-response=$(curl -sL "https://api.kraken.com/0/public/Ticker?pair=$p" -H 'Accept: application/json')
+r=$(curl -sL "https://api.kraken.com/0/public/Ticker?pair=$p" -H 'Accept: application/json')
 
 if [ $? -ne 0 ]; then
   echo "Failed to retrieve data from the Kraken API."
   exit 1
 fi
 
-error=$(echo "$response" | jq --arg k "$k" '.error[]')
+error=$(echo "$r" | jq --arg k "$k" '.error[]')
 rate_limit_error='EAPI:Rate limit exceeded'
 throttled_error='EService: Throttled'
 
@@ -66,7 +65,7 @@ elif [ "$error" == "${throttled_error}:"* ]; then
   exit 1
 fi
 
-c=$(echo "$response" | jq --arg k "$k" '.result[$k].b[0]')
+c=$(echo "$r" | jq --arg k "$k" '.result[$k].b[0]')
 
 if [ $? -ne 0 ]; then
   echo "Failed to extract the required value from the JSON response."
