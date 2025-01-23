@@ -43,11 +43,8 @@ if [ "$m" = true ]; then
   fi
 fi
 
-
 p="$1"
 k="$2"
-x="${p:0:3}"
-y="${p: -3}"
 
 response=$(curl -sL "https://api.kraken.com/0/public/Ticker?pair=$p" -H 'Accept: application/json')
 
