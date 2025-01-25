@@ -65,12 +65,12 @@ elif [ "$error" == "${throttled_error}:"* ]; then
   exit 1
 fi
 
-c=$(echo "$r" | jq --arg k "$k" '.result[$k].b[0]')
+c=$(echo "$r" | jq --arg k "$k" '.result[$k].b[0]' | bc -l | xargs printf "%.2f\n")
 
 if [ $? -ne 0 ]; then
   echo "Failed to extract the required value from the JSON response."
   exit 1
 fi
 
-echo $c | bc -l | xargs printf "%.2f\n"
+echo $c
 exit 0
