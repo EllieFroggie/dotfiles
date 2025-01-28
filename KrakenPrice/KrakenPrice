@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Requires bc
 # Requires jq
 
 # Made by Elizabeth Swann
@@ -43,13 +42,12 @@ if [ "$m" = true ]; then
   fi
 fi
 
-r=$(curl -sL "https://api.kraken.com/0/public/Ticker?pair=$1" -H 'Accept: application/json')
-
 if [ $? -ne 0 ]; then
   echo "Failed to retrieve data from the Kraken API."
   exit 1
 fi
 
+r=$(curl -sL "https://api.kraken.com/0/public/Ticker?pair=$1" -H 'Accept: application/json')
 error=$(echo "$r" | jq --arg k "$2" '.error[]')
 rate_limit_error='EAPI:Rate limit exceeded'
 throttled_error='EService: Throttled'
@@ -63,7 +61,7 @@ elif [ "$error" == "${throttled_error}:"* ]; then
   exit 1
 fi
 
-c=$(echo "$r" | jq --arg k "$2" '.result[$k].b[0]' | bc -l | xargs printf "%.2f\n")
+c=$(echo "$r" | jq --arg k "$2" '.result[$k].b[0]' | xargs printf "%.2f\n")
 
 if [ $? -ne 0 ]; then
   echo "Failed to extract the required value from the JSON response."
