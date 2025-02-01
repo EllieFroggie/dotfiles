@@ -14,8 +14,11 @@ echo $date ": Start Log">> $log
 
 {
     docker image prune -af >> $log 
+    echo $date ": End Log" >> $log
 } || {
     echo "Error, exiting." >> $log
+    echo $date ": End Log" >> $log
+    exit 1
 }
 
-echo $date ": End Log" >> $log
+exit 0
