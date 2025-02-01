@@ -13,4 +13,3 @@ echo "" >> $log
 echo $date ": Start Log">> $log
 docker image prune -af >> $log
 echo $date ": End Log" >> $log
-echo "" >> $log
