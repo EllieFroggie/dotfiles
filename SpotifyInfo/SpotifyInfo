@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+artist=$(playerctl -p spotify_player metadata artist)
+album=$(playerctl -p spotify_player metadata album)
+track=$(playerctl -p spotify_player metadata title)
+echo -e "" $artist "|" $track
+
