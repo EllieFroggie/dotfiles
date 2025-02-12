@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CITY="Calgary"
-API_KEY="b706313bcf10b7bfa68192eb1f2a627"
+API_KEY=""
 
 WEATHER=$(curl -s "https://api.openweathermap.org/data/2.5/weather?q=$CITY&appid=$API_KEY&units=metric")
 
