@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-artist=$(playerctl -p spotify_player metadata artist)
+artist=$(playerctl -p spotify_player metadata artist) || artist=0
 album=$(playerctl -p spotify_player metadata album)
 track=$(playerctl -p spotify_player metadata title)
-echo -e "" $artist "|" $track
 
+if [ "$artist" = "0" ]; then
+    echo ""
+else
+    echo -e "" $artist "|" $track
+fi
