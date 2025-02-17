@@ -1,8 +1,23 @@
 #!/bin/bash
 
 CITY="Calgary"
-API_KEY=""
+API_KEY=$(cat ~/.config/environment/OpenWeatherMap)
+GET=0
 
-WEATHER=$(curl -s "https://api.openweathermap.org/data/2.5/weather?q=$CITY&appid=$API_KEY&units=metric")
+while getopts "g" opt; do
+    case $opt in
+      g) GET=1;;
+      \?)exit 1;;
+    esac
+done
 
-echo $WEATHER
+if [ "$GET" == "1" ]; then
+    wget -qO- "https://api.openweathermap.org/data/2.5/weather?q=$CITY&appid=$API_KEY&units=metric" > ~/.logs/weather.json
+    exit 0
+else 
+    echo $(cat ~/.logs/weather.json | jq -r '.weather[].description') $(cat ~/.logs/weather.json | jq -r '.main.temp') "| Feels Like:" $(cat ~/.logs/weather.json | jq -r '.main.feels_like') 
+    exit 0
+fi
+
+
+
