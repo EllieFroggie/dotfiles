@@ -5,7 +5,7 @@ use warnings;
 use LWP::Simple;
 
 my $IP = get('http://ipinfo.io/ip');
-my $CHECK = "";
+my $CHECK = `cat ~/.config/environment/ip`;
 
 if (!defined $IP) {
     print "";
