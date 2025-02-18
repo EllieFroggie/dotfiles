@@ -8,7 +8,7 @@ my $IP = get('http://ipinfo.io/ip');
 my $CHECK = "";
 
 if (!defined $IP) {
-    print "[]\n";
+    print "";
     exit 33;
 }
 
