@@ -1,0 +1,22 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+use LWP::Simple;
+
+my $IP = get('http://ipinfo.io/ip');
+my $CHECK = "70.73.76.68";
+
+if (!defined $IP) {
+    print "[]\n";
+    exit 33;
+}
+
+if ($IP eq $CHECK) {
+    # full_text\n short_text\n color\n
+    print "Secure";
+} else {
+    print "X";
+}
+
+exit 0;
