@@ -5,7 +5,7 @@ use warnings;
 use LWP::Simple;
 
 my $IP = get('http://ipinfo.io/ip');
-my $CHECK = "70.73.76.68";
+my $CHECK = "";
 
 if (!defined $IP) {
     print "[]\n";
