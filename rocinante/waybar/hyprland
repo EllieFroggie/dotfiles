@@ -1,0 +1,218 @@
+[{  // LEFT SIDE
+    //
+    //
+    //
+ 
+    "layer": "top", // Waybar at top layer
+    "output": ["DP-3"],
+    "position": "top", // Waybar position (top|bottom|left|right)
+    
+    // Choose the order of the modules
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["custom/btc", "custom/xmr", "custom/eth", "custom/sol" ],
+    "modules-right": ["custom/pacman", "clock#clock1", "tray"],
+
+
+     "hyprland/workspaces": {
+         "disable-scroll": true,
+         "disable-markup" : false,
+         "all-outputs": false,
+         "format": "  {icon}  ",
+         "format-icons": {
+            "1": "",
+		    "2": "",
+		    "3": "",
+		    "4": "",
+		    "5": "",                
+            "6": "",
+            "7": "",
+            "8": "", 
+            "9": "", 
+            "0": ""
+         }
+     },
+    "hyprland/submap": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+    "tray": {
+        "icon-size": 21,
+        "spacing": 4
+    },
+    "clock#clock1": {
+        "tooltip-format": "{:%Y-%m-%d | %H:%M}",
+        "format-alt": "{:}",
+        "format": "{:%b %d %T}",
+        "interval": 1
+    },
+    "custom/pacman": {
+         "format": "{icon}{0}",
+        "return-type": "json",
+         "format-icons": {
+          "pending-updates": "   ",
+         "updated": ""
+         },
+        "exec-if": "which waybar-updates",
+        "exec": "waybar-updates"
+    },
+    "custom/xmr": {
+        "format": "<span color='#ffb86c'>{icon}</span> {0}",
+        "interval": 30,
+        "exec": "$HOME/.config/waybar/scripts/HyprKraken -m XMRUSD XXMRZUSD",
+        "format-icons": " "
+    },
+    "custom/btc": {
+        "format": "<span color='#f1fa8c'>{icon}</span> {0}",
+        "interval": 30,
+        "exec": "$HOME/.config/waybar/scripts/HyprKraken -m BTCUSD XXBTZUSD",
+        "format-icons": " "
+    },
+    "custom/eth": {
+        "format": "<span color='#8be9fd'>{icon}</span> {0}",
+        "interval": 30,
+        "exec": "$HOME/.config/waybar/scripts/HyprKraken -m ETHUSD XETHZUSD",
+        "format-icons": " "
+    },
+    "custom/sol": {
+        "format": "<span color='#ff79c6'>{icon}</span> {0}",
+        "interval": 30,
+        "exec": "$HOME/.config/waybar/scripts/HyprKraken -m SOLUSD SOLUSD",
+        "format-icons": " "
+    }
+
+    
+
+}, { // CENTER AND RIGHT SIDE
+     //
+     //
+     //
+
+    "layer": "top", // Waybar at top layer
+    "output": ["HDMI-A-1", "DP-1"],
+    "position": "top", // Waybar position (top|bottom|left|right)
+    
+    // Choose the order of the modules
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": [],
+    "modules-right": [ "custom/pacman", "disk#disk2", "disk", "memory", "cpu", "temperature", "pulseaudio", "clock", "custom/xmrig", "tray"],
+
+
+     "hyprland/workspaces": {
+         "disable-scroll": true,
+         "disable-markup" : false,
+         "all-outputs": false,
+         "format": "  {icon}  ",
+         "format-icons": {
+            "1": "",
+		    "2": "",
+		    "3": "",
+		    "4": "",
+		    "5": "",                
+            "6": "",
+            "7": "",
+            "8": "", 
+            "9": "", 
+            "0": ""
+         }
+     },
+
+    "hyprland/submap": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 4
+    },
+
+    "disk": {
+	    "interval": 30,
+	    "format": "<span color='#ffb86c' font='Material Icons 5 18px'> </span>{specific_used:0.2f}GB",
+        "unit": "GB",
+        "tooltip": true,
+        "tooltip-format": "{path}"
+    },
+
+    "disk#disk2": {
+        "path": "/int",
+	    "interval": 30,
+	    "format": "<span color='#bd93f9' font='Material Icons 5 18px'> </span>{specific_used:0.2f}GB",
+        "unit": "GB",
+        "tooltip": true,
+        "tooltip-format": "{path}"
+    },
+
+    "clock": {
+        "tooltip-format": "{:%Y-%m-%d | %H:%M}",
+        "format-alt": "{:}",
+        "format": "{:%b %d %T}",
+        "interval": 1
+        
+    },
+
+    "cpu": {
+        "format": "<span color='#50fa7b' font='Material Icons 5 18px'> </span> {usage}%",
+        "interval": 1
+    },
+    
+    "memory": {
+        "format": "<span color='#f1fa8c' font='Material Icons 5 18px'> </span>{}%"
+    },
+
+    "temperature": {
+        // "thermal-zone": 2,
+        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 80,
+        // "format-critical": " {temperatureC}°C ",
+        "format": "<span color='#8be9fd' font='Material Icons 5 18px'> </span> {temperatureC}°C "
+    },
+
+    "pulseaudio": {
+        //"scroll-step": 1,
+        "format": "<span color='#ff79c6' font='Material Icons 5 18px'>{icon} </span>{volume}% ",
+        "format-bluetooth": "{volume}% {icon}",
+        "format-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", ""]
+        },
+        "on-click": "pavucontrol"
+    },
+
+    "custom/pacman": {
+         "format": "{icon}{0}",
+        "return-type": "json",
+         "format-icons": {
+          "pending-updates": "   ",
+         "updated": ""
+         },
+        "exec-if": "which waybar-updates",
+        "exec": "waybar-updates"
+    },
+    "custom/xmrig": {
+        "format":"{0}",
+        "interval": 30,
+        "exec": "$HOME/.config/waybar/scripts/xmrig-helper --log=$HOME/.logs/"
+    }
+
+
+}]

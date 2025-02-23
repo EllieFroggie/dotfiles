@@ -1,0 +1,79 @@
+#!/usr/bin/perl
+
+# Created by Elizabeth Swann
+
+# Usage: ./miner-v2 --mod={1, 2} --log={directory}
+# mod (optional): 1=start | 2=stop
+# log (optional): Specify a directory for the log file, otherwise it defaults to the same path as the script
+
+use strict;
+use warnings;
+
+use Log::Log4perl qw(:easy);
+use File::Basename;
+use File::Spec;
+use Getopt::Long;
+use Switch;
+
+my $mod = 0;
+my $directory = ".";
+
+GetOptions(
+    "mod=i" => \$mod,
+    "log=s" => \$directory,
+);
+
+my $log_file = File::Spec->catfile($directory, 'xmrig-helper.log');
+my $command = "cat ~/.config/environment/monitor";
+my $xmrig_status_command = "ps aux | grep xmrig";
+my $xmrig_start_command = "docker start xmrig 2>/dev/null 1>&2";
+my $xmrig_stop_command = "docker stop xmrig 2>/dev/null 1>&2";
+my $xmrig_process = "xmrig -c /cfg/config.json";
+
+Log::Log4perl->easy_init({
+    level   => $DEBUG,
+    file    => ">>$log_file"
+});
+
+
+my $env_monitor = `$command`; # Monitor
+chomp($env_monitor);
+
+my $xmrig_status = `$xmrig_status_command`; # xmrig
+chomp($xmrig_status);
+
+sub start_xmrig {
+    DEBUG("Starting XMRig...");
+    system($xmrig_start_command) == 0 or die "Failed to start XMRig: $?";
+    DEBUG("XMRig started.");
+}
+
+sub stop_xmrig {
+    DEBUG("Stopping XMRig...");
+    system($xmrig_stop_command) == 0 or die "Failed to stop XMRig: $?";
+    DEBUG("XMRig stopped.");
+}
+
+if ($mod == 0) {
+    if (-e "xmrig.lock") {
+        DEBUG("Tried to start XMRig, but xmrig.lock exists");
+        exit 0;
+    } else {
+       if ($env_monitor == "1") {
+            if ($xmrig_status !~ /\Q$xmrig_process\E/) {
+                start_xmrig();
+            }
+        } else {
+            if ($xmrig_status =~ /\Q$xmrig_process\E/) {
+                stop_xmrig();
+                print "<span color='#ffb86c' font='Material Icons 5 18px'></span>";
+            }
+        }
+    }
+} elsif ($mod == 1) {
+    start_xmrig();
+} elsif ($mod == 2) {
+    stop_xmrig();
+}
+
+

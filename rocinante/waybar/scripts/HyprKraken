@@ -3,7 +3,10 @@
 # Requires jq
 
 # Made by Elizabeth Swann
-# Tool to display crypto prices in i3bar
+# Tool to display crypto prices
+# Updated from KrakenPrice to remove unnecessary variables and to work with wayland
+# Requires monitor file in /home/.config/environment that returns 1 or 0
+
 # Usage: ./krakenprice -m <PAIR> <PAIRKEY>
 # -m,  stop requests when the monitor turns off
 
@@ -31,14 +34,9 @@ if [ -z "$2" ] || [ "${#1}" -ne 6 ]; then
 fi
 
 if [ "$m" = true ]; then
-  if [ "$(xset q | grep -E "DPMS is" | awk '{print  $3}')" = "Disabled" ]; then
-    echo "DPMSerr"
-    exit 1
-  else
-    if [ "$(xset -display :0 q | grep -E 'Monitor is' | awk '{print $3}')" = "Off" ]; then
+  if [ $(cat ~/.config/environment/monitor) == "1" ]; then # 1 Monitor OFF
     echo "OFF"
     exit 1
-    fi
   fi
 fi
 
@@ -49,24 +47,20 @@ fi
 
 r=$(curl -sL "https://api.kraken.com/0/public/Ticker?pair=$1" -H 'Accept: application/json')
 error=$(echo "$r" | jq --arg k "$2" '.error[]')
-rate_limit_error='EAPI:Rate limit exceeded'
-throttled_error='EService: Throttled'
 
-if [ "$error" == "$rate_limit_error" ]; then
+if [ "$error" == "EAPI:Rate limit exceeded" ]; then
   echo "Rate limit exceeded. Please try again later."
   exit 1
-elif [ "$error" == "${throttled_error}:"* ]; then
+elif [ "$error" == "EService: Throttled"* ]; then
   timestamp=$(echo "$error" | cut -d: -f3)
   echo "Too many concurrent requests. Try again after $timestamp."
   exit 1
 fi
-
-c=$(echo "$r" | jq --arg k "$2" '.result[$k].b[0]' | xargs printf "%.2f\n")
 
 if [ $? -ne 0 ]; then
   echo "Failed to extract the required value from the JSON response."
   exit 1
 fi
 
-echo $c
+echo $(echo "$r" | jq --arg k "$2" '.result[$k].b[0]' | xargs printf "%.2f\n")
 exit 0
