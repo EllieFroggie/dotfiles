@@ -11,7 +11,7 @@ use File::Path qw(make_path);
 use POSIX qw(strftime);
 use File::Spec;
 
-my $dir = $ENV{RECORDING_DIR} || "/home/swann/Recordings";
+my $dir = $ENV{RECORDING_DIR} || "$HOME/Recordings";
 my $base_filename = strftime("%Y%m%d-%H%M", localtime);
 
 unless (-d $dir) {

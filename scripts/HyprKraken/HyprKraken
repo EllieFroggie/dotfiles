@@ -34,7 +34,7 @@ if [ -z "$2" ] || [ "${#1}" -ne 6 ]; then
 fi
 
 if [ "$m" = true ]; then
-  if [ $(cat ~/.config/environment/monitor) == "1" ]; then # 1 Monitor OFF
+  if [ $(cat $HOME/.config/environment/monitor) == "1" ]; then # 1 Monitor OFF
     echo "OFF"
     exit 1
   fi

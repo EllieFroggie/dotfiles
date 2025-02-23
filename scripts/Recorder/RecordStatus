@@ -4,7 +4,7 @@
 
 # [example]
 # full_text=
-# command=~/.config/i3/scripts/recordstatus ~/Recordings rec.pid
+# command=$HOME/.config/i3/scripts/recordstatus ~/Recordings rec.pid
 # interval=2
 # color=#ff79c6
 

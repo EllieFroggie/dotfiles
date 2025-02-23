@@ -2,7 +2,7 @@
 
 # Created by Elizabeth Swann
 
-log=~/.logs/DockerCleanup.log
+log=$HOME/.logs/DockerCleanup.log
 date=$(date +%Y-%m-%d)
 
 if [ ! -f $log ]; then
