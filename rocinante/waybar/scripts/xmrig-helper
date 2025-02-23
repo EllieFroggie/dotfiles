@@ -24,7 +24,7 @@ GetOptions(
 );
 
 my $log_file = File::Spec->catfile($directory, 'xmrig-helper.log');
-my $command = "cat ~/.config/environment/monitor";
+my $command = "cat $HOME/.config/environment/monitor";
 my $xmrig_status_command = "ps aux | grep xmrig";
 my $xmrig_start_command = "docker start xmrig 2>/dev/null 1>&2";
 my $xmrig_stop_command = "docker stop xmrig 2>/dev/null 1>&2";
