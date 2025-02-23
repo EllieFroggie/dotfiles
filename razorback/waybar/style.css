@@ -1,0 +1,196 @@
+
+@define-color background #282a36;
+@define-color currentline #44475a;
+@define-color selection #44475a;
+@define-color foreground #f8f8f2;
+@define-color comment #6272a4;
+@define-color cyan #8be9fd;
+@define-color green #50fa7b;
+@define-color orange #ffb86c;
+@define-color pink #ff79c6;
+@define-color purple #bd93f9;
+@define-color red #ff5555;
+@define-color yellow #f1fa8c;
+
+* {
+  border: none;
+  font-family: 'Noto Sans';
+  font-size: 15px;
+  min-height: 1px;
+}
+
+#custom-eth, #custom-btc, #custom-xmr, #custom-sol, #custom-powerstatus, #custom-pacman, #workspaces, #clock, #battery, #tray, #cpu, #disk, #memory, #temperature, #backlight, #network, #pulseaudio, #custom-media, #mode, #idle_inhibitor {
+  padding: 0 5px;
+  margin: 5px 0px;
+}
+
+window#waybar {
+  background: transparent;
+  color: #ffffff;
+
+}
+
+window#waybar.hidden {
+  opacity: 0.0;
+}
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+#workspaces button {
+  padding: 0 2px;
+  background: @background;
+  border: 3px solid @background;
+  color: #ffffff;
+  border-radius: 0;
+}
+
+#workspaces button.active {
+  background-color: @selection;
+  border: 3px solid @selection;
+  border-bottom: 3px solid @purple;
+}
+
+#workspaces button:first-child {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+#workspaces button:last-child {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+#workspaces button.urgent {
+  background-color: @pink;
+}
+
+#mode {
+  background: #64727D;
+  border-bottom: 3px solid #ffffff;
+}
+
+
+#clock {
+  background-color: @background;
+  border-bottom: 3px solid @purple;
+
+}
+
+#battery {
+  background-color: @background;
+  color: #FFFFFF;
+  border-bottom: 3px solid @pink;
+}
+
+#battery.charging {
+  color: #ffffff;
+  background-color: @background;
+}
+
+@keyframes blink {
+  to {
+      background-color: @background;
+      color: #FFFFFF;
+  }
+}
+
+#battery.critical:not(.charging) {
+  background: @red;
+  color: #ffffff;
+  animation-name: blink;
+  animation-duration: 0.5s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+#disk {
+  background: @background;
+  border-bottom: 3px solid @purple;
+}
+
+#disk.disk2 {
+  background: @background;
+  border-bottom: 3px solid @purple;
+  padding-left: 10px;
+  border-left: 3px solid @background;
+}
+
+#cpu {
+  background: @background;
+  border-bottom: 3px solid @yellow;
+}
+
+#memory {
+  background: @background;
+  border-bottom: 3px solid @orange;
+}
+
+#pulseaudio {
+  background: @background;
+  color: #FFFFFF;
+  border-bottom: 3px solid @cyan;
+}
+
+#pulseaudio.muted {
+  background: #90b1b1;
+  color: #2a5c45;
+}
+
+#temperature {
+  background: @background;
+  border-bottom: 3px solid @green;
+}
+
+#temperature.critical {
+  background: #ff5555;
+}
+
+#tray {
+  background: @background;
+  padding: 3px;
+  padding-right: 10px;
+  margin-right: 12px;
+  border-radius: 0 15px 15px 0;
+
+}
+
+#idle_inhibitor {
+  background-color: #2d3436;
+}
+
+#idle_inhibitor.activated {
+  background-color: #ecf0f1;
+  color: #2d3436;
+}
+
+
+#custom-pacman {
+  background: @background;
+  border-bottom: 3px solid @background;
+}
+
+#custom-powerstatus {
+  background: @background;
+
+  border-bottom: 3px solid @orange;
+}
+
+#custom-xmr { 
+  background: @background;
+  padding-left: 10px;
+
+}
+#custom-btc { 
+  background: @background;
+  padding-left: 10px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+  
+}
+#custom-eth { 
+  background: @background;
+  padding-left: 10px;
+
+}
+#custom-sol { 
+  background: @background;
+
+}
