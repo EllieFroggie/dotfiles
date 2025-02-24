@@ -1,0 +1,7 @@
+#!/usr/bin/bash
+
+if [ "$(wget http://ipinfo.io/ip -qO -)" == "$(cat ~/.config/environment/ip)" ]; then
+  echo "  "
+else
+  echo " <span color='ff5555'></span> " 
+fi
