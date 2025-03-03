@@ -14,3 +14,4 @@ A collection of dotfiles and scripts I've made/modified. This is intended as a b
 - bjesus - [wttrbar](https://github.com/bjesus/wttrbar) Weather widget for Waybar
 - dracula - [Dracula](https://github.com/dracula/dracula-theme) The BEST color scheme :)
 - kovidgoyal - [Kitty](https://github.com/kovidgoyal/kitty) Terminal
+- savely-krasovsky - [waybar-updates](https://github.com/savley-krasovsky/waybar-updates) Update checker for Waybar
