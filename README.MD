@@ -5,6 +5,7 @@ A collection of dotfiles I've made/modified. This is mostly intended as a backup
 ## Screenshots
 
 ![](screenshots/razdesk.png)
+![](screenshots/rofi.png)
 
 ## Links
 
