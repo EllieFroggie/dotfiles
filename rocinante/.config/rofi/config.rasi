@@ -34,6 +34,7 @@ configuration {
  	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";	
 */
 
+
 	/*---------- Drun settings ----------*/
 	drun-categories: "";
 	drun-match-fields: "name,generic,exec,categories,keywords";
@@ -107,6 +108,7 @@ configuration {
       delay:  0;
     }
 
+
 	/*---------- Keybindings ----------*/
 /*
 	kb-primary-paste: "Control+V,Shift+Insert";
@@ -129,7 +131,7 @@ configuration {
 	kb-accept-custom-alt: "Control+Shift+Return";
 	kb-accept-alt: "Shift+Return";
 	kb-delete-entry: "Shift+Delete";
-	kb-mode-next: "Shift+Right,Control+Tab";
+	kb-mode-next: "Shift+Right,Control+A;
 	kb-mode-previous: "Shift+Left,Control+ISO_Left_Tab";
 	kb-mode-complete: "Control+l";
 	kb-row-left: "Control+Page_Up";

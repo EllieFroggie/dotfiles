@@ -18,6 +18,11 @@ configuration {
 	display-ssh:                " SSH";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c} · {t}";
+    kb-element-next:            "Alt+Tab";
+    kb-element-prev:            "Shift+Alt+Tab";
+    kb-mode-next:               "Tab";
+
+
 }
 
 /*****----- Global Properties -----*****/
@@ -126,7 +131,7 @@ textbox-prompt-colon {
     enabled:                     true;
     padding:                     5px 0px;
     expand:                      false;
-    str:                         "";
+    str:                         " ";
     background-color:            inherit;
     text-color:                  inherit;
 }
