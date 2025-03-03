@@ -1,6 +1,6 @@
 # Dotfiles
 
-A collection of dotfiles and scripts I've made/modified. This is mostly intended as a backup for my personal system, so use these at your own risk!
+A collection of dotfiles and scripts I've made/modified. This is intended as a backup for my personal system, so use these at your own risk!
 
 ## Screenshots
 
