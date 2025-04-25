@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ ! -f $HOME/.config/environment/monitor ]; then 
+    touch $HOME/.config/environment/monitor && \
+    echo 0 > $HOME/.config/environment/monitor;
+else 
+    echo 0 > $HOME/.config/environment/monitor; 
+fi

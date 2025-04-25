@@ -17,5 +17,7 @@ theme='style-8'
 ## Run
 rofi \
     -show drun \
+    -sort \
+    -disable-history \
     -theme ${dir}/${theme}.rasi 
  #   -config $HOME/.config/rofi/config.rasi

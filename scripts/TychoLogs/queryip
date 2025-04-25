@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Please provide an IP" 
+fi
+
+if [ $# -gt 1 ]; then
+    echo "Only one IP please!"
+    exit 1
+fi
+
+jq 'select(.request.remote_ip == "'$1'")' \
+ $HOME/.logs/tycho/access.json

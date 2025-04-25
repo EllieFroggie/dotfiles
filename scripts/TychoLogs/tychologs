@@ -1,0 +1,21 @@
+#!/bin/bash
+
+LOG_DIR=""
+SSH_KEY=""
+
+ssh -i $SSH_KEY sysmon@tycho cat /opt/caddy/caddy-data/access.log > $LOG_DIR/access.log \
+
+cat $LOG_DIR/access.log | \
+jq '.request.remote_ip' | \
+sort -u | \
+sed 's/"//g' > $LOG_DIR/tycho_ips.txt
+
+cat $LOG_DIR/access.log | \
+jq > $LOG_DIR/access.json
+
+while read p; do \
+    curl -s http://ip-api.com/json/$p?fields=17559551 | \
+    jq; 
+    sleep 4;
+done < $LOG_DIR/tycho_ips.txt > $LOG_DIR/tycho_dnsreport.json
+
